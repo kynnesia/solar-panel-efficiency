@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 
+# For option 1
 def weather_df(lat:float,
               lon:float,
               year:int, # "YYYY"
@@ -40,7 +41,7 @@ def weather_df(lat:float,
     weather_df["timestamp"] = year
     return weather_df
 
-
+# For Option 1
 def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     """
     This function aggregates all the rows by summing or averaging them.
