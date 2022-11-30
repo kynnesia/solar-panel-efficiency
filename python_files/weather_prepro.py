@@ -74,3 +74,75 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
                        wind_direction, solar_radiation, evapotransp]
     # Return
     return aggregates_list
+
+
+def monthly_weather_df(lat:float,
+              lon:float,
+              year:int, # "YYYY"
+              )-> pd.DataFrame:
+    """
+    Given a latitude, longitude, start date, and end date, provide
+    a daily dataframe of all features.
+    """
+    start_date = f"{year}-01-01"
+    end_date = f"{year}-12-30"
+    weather_url = 'https://archive-api.open-meteo.com/v1/era5'
+    weather_params = {
+      "latitude" : lat,
+      "longitude" : lon,
+      "start_date" : start_date,
+      "end_date" : end_date,
+      "timezone" : "Europe/Madrid",
+      "daily" : ["temperature_2m_max",
+                  "temperature_2m_min",
+                  "precipitation_sum",
+                  "rain_sum",
+                  "snowfall_sum",
+                  "precipitation_hours",
+                  "sunrise",
+                  "sunset",
+                  "windspeed_10m_max",
+                  "windgusts_10m_max",
+                  "winddirection_10m_dominant",
+                  "shortwave_radiation_sum", # ! IMPORTANT METRIC
+                  "et0_fao_evapotranspiration"]
+    }
+    weather_data = requests.get(weather_url, params=weather_params)
+    weather_dict = weather_data.json()
+    weather_df = pd.DataFrame(weather_dict["daily"])
+    weather_df["latitude"] = lat
+    weather_df["longitude"] = lon
+    weather_df["timestamp"] = year
+    weather_df["month"] = weather_df["time"].str[5:7]
+
+    return weather_df.groupby(by="month").agg({"temperature_2m_max":"mean",
+                                                "temperature_2m_min":"mean",
+                                                "precipitation_sum":"sum",
+                                                "rain_sum":"sum",
+                                                "snowfall_sum":"sum",
+                                                "precipitation_hours":"sum",
+                                                "windspeed_10m_max":"mean",
+                                                "windgusts_10m_max":"mean",
+                                                "winddirection_10m_dominant":"mean",
+                                                "shortwave_radiation_sum":"sum",
+                                                "et0_fao_evapotranspiration":"sum"
+                                                })
+
+
+
+def monthly_pvwatts_data(lat,lon,proxy,timeout=5):
+    url = 'https://developer.nrel.gov/api/pvwatts/v6.json?api_key=IAwRTEmh1TANaK6K6IwN65trPMdCydwXB0lPcg6f'
+    params = {"lat":lat,
+              "lon":lon,
+              "system_capacity":4,
+              "azimuth":180,
+              "tilt":40,
+              "array_type":1,
+              "losses":10,
+              "module_type":1,
+              "dataset":"intl"}
+    technical_data = requests.get(url, params=params, timeout=timeout,
+                                  proxies={"http":proxy,
+                                           "https":proxy})
+
+    return technical_data.json().get("outputs")

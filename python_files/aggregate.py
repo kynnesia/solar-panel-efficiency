@@ -1,5 +1,5 @@
 from panels_prepro import get_dataframe_option1
-from weather_prepro import weather_df, aggregates_df
+from weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data
 import pandas as pd
 import numpy as np
 import time
@@ -95,3 +95,24 @@ def df_to_model(df:pd.DataFrame,
     else:
         print("Supervised or Unsupervised not specified.")
         return KeyError
+
+def add_target(df:pd.DataFrame) -> pd.DataFrame:
+    target_dict = {
+        "ac_monthly":[],
+        "poa_monthly":[],
+        "solrad_monthly":[],
+        "dc_monthly":[],
+    }
+    for i,r in df.iterrows():
+        try:
+            print("Computing")
+            latitude = r["latitude"]
+            longitude = r["longitude"]
+
+            list_ = monthly_pvwatts_data(lat=latitude,
+                                     lon=longitude,
+                                     proxy=XXXX)
+
+        except:
+            time.sleep(5)
+            continue
