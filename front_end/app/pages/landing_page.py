@@ -14,20 +14,24 @@ st.markdown("""
     # Which is the best place to set up a Solar Panel Station?
     """)
 
-# SIDEBAR
-st.sidebar.markdown("""
-                    ## Incremental investment in Solar Panel Generation
-                    """)
+# DB
+spain_provinces = pd.read_csv("../../raw_data/provincias.csv")
+solar_stations = pd.read_csv("../../raw_data/Spain_energy_df_2017.csv")
+map_solar_stations = solar_stations[solar_stations["primary_fuel"]=="Solar"]
 
-option = st.sidebar.slider('Level of solar energy production\
-                compared to aggregated energy production (in %)', 5, 100, 5)
-
-
-# HEADER
+# INVESTMENT NEEDED
+cost = 0
 col1, col2, col3 = st.columns(3)
-col1.metric("Solar Stations", "14", option)
-col2.metric("Solar Energy produced (GWh)", "1234.5", option)
-col3.metric("Non-renewable energy produced (GWh)", "67890.5", option)
+with col1:
+    st.header("Solar energy production")
+    option = st.slider('Compared to aggregated energy production (in %)', 5, 100, 5)
+with col2:
+    st.metric("Investment Needed", f"€{cost}")
+    st.metric("Solar Stations", map_solar_stations.shape[0], option)
+with col3:
+    st.metric("Solar Energy produced (GWh)", "1234.5", option)
+    st.metric("Non-renewable energy produced (GWh)", "67890.5", option)
+
 
 
 # MAP WITH BORDERS
@@ -35,9 +39,7 @@ with urlopen('https://raw.githubusercontent.com/deldersveld/topojson/master/coun
     as response:
     Spain = json.load(response)
 # MAP
-spain_provinces = pd.read_csv("../../raw_data/provincias.csv")
-solar_stations = pd.read_csv("../../raw_data/Spain_energy_df_2017.csv")
-map_solar_stations = solar_stations[solar_stations["primary_fuel"]=="Solar"]
+
 
 # PLOTLY FIG
 c1,c2 = st.columns(2)
