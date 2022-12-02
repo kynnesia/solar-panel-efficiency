@@ -1,15 +1,17 @@
 import pandas as pd
 import requests
 
+# For option 1
 def weather_df(lat:float,
               lon:float,
-              start_date:str, # "YYYY-MM-DD"
-              end_date:str    # "YYYY-MM-DD"
+              year:int, # "YYYY"
               )-> pd.DataFrame:
     """
     Given a latitude, longitude, start date, and end date, provide
     a daily dataframe of all features.
     """
+    start_date = f"{year}-01-01"
+    end_date = f"{year}-12-30"
     weather_url = 'https://archive-api.open-meteo.com/v1/era5'
     weather_params = {
       "latitude" : lat,
@@ -34,10 +36,13 @@ def weather_df(lat:float,
     weather_data = requests.get(weather_url, params=weather_params)
     weather_dict = weather_data.json()
     weather_df = pd.DataFrame(weather_dict["daily"])
+    weather_df["latitude"] = lat
+    weather_df["longitude"] = lon
+    weather_df["timestamp"] = year
     return weather_df
 
-
-def preprocess_weather_df(weather_df:pd.DataFrame) -> pd.DataFrame:
+# For Option 1
+def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     """
     This function aggregates all the rows by summing or averaging them.
     """
@@ -60,16 +65,12 @@ def preprocess_weather_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     solar_radiation = weather_df["shortwave_radiation_sum"].sum()
     evapotransp = weather_df["et0_fao_evapotranspiration"].sum()
 
-    # To DataFrame
-    aggregates_list = [max_temp, min_temp, prec_sum, rain_sum, snow_sum,
+    # List
+    aggregates_list = [weather_df["timestamp"].iat[0],
+                       weather_df["latitude"].iat[0],
+                       weather_df["longitude"].iat[0],
+                       max_temp, min_temp, prec_sum, rain_sum, snow_sum,
                        prec_hours, sun_hours, wind_speed_max, wing_gusts_max,
                        wind_direction, solar_radiation, evapotransp]
-    weather_df_agg = pd.DataFrame(aggregates_list).T
-    weather_df_agg.columns = ['temperature_2m_max', 'temperature_2m_min',
-                              'precipitation_sum','rain_sum', 'snowfall_sum',
-                              'precipitation_hours', 'sun hours',
-                              'windspeed_10m_max', 'windgusts_10m_max',
-                              'winddirection_10m_dominant',
-                              'shortwave_radiation_sum',
-                              'et0_fao_evapotranspiration']
-    return weather_df_agg
+    # Return
+    return aggregates_list
