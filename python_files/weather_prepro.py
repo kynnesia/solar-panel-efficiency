@@ -113,18 +113,7 @@ def monthly_weather_df(lat:float,
     weather_df["timestamp"] = year
     weather_df["month"] = weather_df["time"].str[5:7]
 
-    output = weather_df.groupby(by="month").agg({"temperature_2m_max":"mean",
-                                                "temperature_2m_min":"mean",
-                                                "precipitation_sum":"sum",
-                                                "rain_sum":"sum",
-                                                "snowfall_sum":"sum",
-                                                "precipitation_hours":"sum",
-                                                "windspeed_10m_max":"mean",
-                                                "windgusts_10m_max":"mean",
-                                                "winddirection_10m_dominant":"mean",
-                                                "shortwave_radiation_sum":"sum",
-                                                "et0_fao_evapotranspiration":"sum"
-                                                })
+    output = weather_df.groupby(by="month").agg("mean")
     output["latitude"] = lat
     output["longitude"] = lon
     return output

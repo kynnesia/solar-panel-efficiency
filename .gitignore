@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 data-local/
 python_files/Elevation data
+=======
+*.ipynb
+.waqitoken
+.python-version
+>>>>>>> 2b95458add629d96f2d46ec100279380a7000efc
