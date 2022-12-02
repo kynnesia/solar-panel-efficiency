@@ -21,4 +21,4 @@ def cleaning(csvname):
     df[['2017', '2018', '2019', '2020', '2021']] = df[['2017', '2018', '2019', '2020', '2021']].applymap(lambda x: float(x.replace(",", ".")))
     df[['2017', '2018', '2019', '2020', '2021']] = df[['2017', '2018', '2019', '2020', '2021']].applymap(lambda x: round(x,2))
 
-    return df
+    return df.to_csv('gwh.csv', index=False)
