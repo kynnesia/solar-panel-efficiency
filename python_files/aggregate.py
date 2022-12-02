@@ -33,7 +33,7 @@ def general_yearly_df(df:pd.DataFrame,
                 'shortwave_radiation_sum':[],
                 'et0_fao_evapotranspiration':[]
                 }
-        for y in range(5):
+        for y in range(1):
             print(f"Year {year+y}")
             loading=1
             for i, r in df.iterrows():
