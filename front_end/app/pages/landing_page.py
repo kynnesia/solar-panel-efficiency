@@ -2,49 +2,98 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import pydeck as pdk
 from urllib.request import urlopen
-import json
+import math
+import pydeck as pdk
+from pydeck.types import String
+from unidecode import unidecode
 
 
 st.set_page_config(layout="wide")
 
-# TITLE
+#------- TITLE -------
 st.markdown("""
     # Which is the best place to set up a Solar Panel Station?
     """)
 
-# DB
-spain_provinces = pd.read_csv("../../raw_data/provincias.csv")
+#------- DB -------
+provincias = pd.read_csv("../../raw_data/provincias.csv")
 solar_stations = pd.read_csv("../../raw_data/Spain_energy_df_2017.csv")
 map_solar_stations = solar_stations[solar_stations["primary_fuel"]=="Solar"]
+solar_energy = map_solar_stations["energy_gen_2017"].sum()
+all_energy = solar_stations["energy_gen_2017"].sum()
+actual_ratio_solar = (solar_energy/all_energy)*100
+non_renewables_split = 0.677
 
-# INVESTMENT NEEDED
-cost = 0
-col1, col2, col3 = st.columns(3)
+#------- SLIDER AND DESCRIPTION -------
+col1, col2 = st.columns(2)
 with col1:
     st.header("Solar energy production")
-    option = st.slider('Compared to aggregated energy production (in %)', 5, 100, 5)
+    option = st.slider('Compared to aggregated energy production (in %)', 0, 100, math.ceil(actual_ratio_solar))
 with col2:
-    st.metric("Investment Needed", f"€{cost}")
-    st.metric("Solar Stations", map_solar_stations.shape[0], option)
-with col3:
-    st.metric("Solar Energy produced (GWh)", "1234.5", option)
-    st.metric("Non-renewable energy produced (GWh)", "67890.5", option)
+    st.markdown("This is an ongoing project that aims to improve the decision-\
+        making process concerning where to set up new Solar Stations. To do \
+        so, we have analysed some features, mostly weather-related, to predict\
+        those locations mostly suited to benefit from solar power.")
+
+#------- METRICS -------
+cost = 0
+c1,c2,c3,c4,c5 = st.columns(5)
+c1.metric("Investment Needed", f"€{cost}")
+c2.metric("Solar Stations", map_solar_stations.shape[0], option)
+c3.metric("Solar Energy produced (GWh)", int(all_energy)*option/100, round(int(all_energy)*option/100 - solar_energy, 2))
+c4.metric("Decrease of CO3", 20.45, 2)
+c5.metric("Aggregate energy produced (GWh)", round(all_energy,2))
 
 
+#------- PREPRO PROVINCIAS -------
+provincias["Provincia"] = provincias["Provincia"].apply(unidecode)
+#------- MAP PREPRO -------
+provincias_grouped = provincias.groupby('Provincia').agg({'latitude':'mean','longitude':'mean'}).reset_index()
+def get_closest_province(row):
+    df = provincias_grouped[['latitude','longitude']] - list(row[['lat','lon']])
 
-# MAP WITH BORDERS
-with urlopen('https://raw.githubusercontent.com/deldersveld/topojson/master/countries/spain/spain-province.json')\
-    as response:
-    Spain = json.load(response)
-# MAP
+    df['agg'] = df['latitude']**2 + df['longitude']**2
+    name_index = df.sort_values('agg').iloc[0,:].name
+
+    return provincias_grouped.iloc[name_index].Provincia
+map_solar_stations['province'] = map_solar_stations.apply(get_closest_province,axis=1)
+map_solar_stations.groupby('province').agg({'energy_gen_2017':'sum'}).sort_values('energy_gen_2017',ascending=False)
+#------- MAP  -------
+data = map_solar_stations
+layer = pdk.Layer(
+    "GridLayer",
+    data,
+    pickable=True,
+    extruded=True,
+    stroked=False,
+    filled=True,
+    wireframe=True,
+    cell_size=15000,
+    elevation_scale=200,
+    get_position=['lon', 'lat'],
+)
+layer2 = pdk.Layer(
+    "HeatmapLayer",
+    data,
+    opacity=0.5,
+    get_position=['lon', 'lat'],
+    aggregation=String('SUM'),
+    get_weight="energy_gen_2017")
+view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
+# Render
+r = pdk.Deck(
+    layers=[layer,layer2],
+    initial_view_state=view_state,
+    tooltip={"text": "{position}\nSolar Generation: {energy_gen_2017}"},
+)
+st.pydeck_chart(r)
 
 
 # PLOTLY FIG
 c1,c2 = st.columns(2)
 fig = px.scatter_geo(map_solar_stations,lat='lat',lon='lon',
-                     color="Solar Generation (2017)",
+                     color="energy_gen_2017",
                      template="simple_white",
                      color_continuous_scale=px.colors.sequential.Greens,
                      title="Solar Stations in Spain by energy production (2017)"
@@ -69,7 +118,7 @@ fig.update_layout(
 # PLOTLY FIG2
 c1,c2 = st.columns(2)
 fig2 = px.scatter_geo(map_solar_stations,lat='lat',lon='lon',
-                     color="Solar Generation (2017)",
+                     color="energy_gen_2017",
                      template="simple_white",
                      color_continuous_scale=px.colors.sequential.Blues,
                      title="Top 20 places to locate a new station",
