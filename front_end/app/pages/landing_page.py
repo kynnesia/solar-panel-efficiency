@@ -8,6 +8,8 @@ import pydeck as pdk
 from pydeck.types import String
 from unidecode import unidecode
 import os
+import plotly.graph_objects as go
+import json
 
 
 st.set_page_config(layout="wide")
@@ -106,16 +108,63 @@ r = pdk.Deck(
     initial_view_state=view_state,
     tooltip={"text": "{position}\nSolar Generation: {energy_gen_gwh}"},
 )
+
 st.pydeck_chart(r)
 
 
-# PLOTLY FIG
-c1,c2 = st.columns(2)
-fig = px.scatter_geo(map_solar_stations,lat='lat',lon='lon',
-                     color="energy_gen_gwh",
-                     template="simple_white",
-                     color_continuous_scale=px.colors.sequential.Greens)
-fig.update_geos(
+# UPLOAD DATAFRAME
+df = pd.read_csv("raw_data/Energy_Provinces.csv")
+df = df.rename(columns={'energy_gen_gwh':'solar_generation'})
+df.drop(['Unnamed: 0', 'country'], axis=1, inplace=True)
+df = df.loc[df.primary_fuel=='Solar']
+# LOAD JSON WITH PROVINCIAS AND THEIR LAT-LON POSITION
+Spain = json.load(open('raw_data/spain.geojson', encoding='utf-8'))
+# Create state id map
+state_id_map = {}
+for feature in Spain['features']:
+    feature['id'] = feature['properties']['provincia']
+    state_id_map[feature['properties']['cod_ccaa']] = feature['id']
+# CREATE A LAT-LON DICT TO CREATE ROWS FOR PROVINCIAS THAT ARE NOT IN THE DF
+lat_lon = {}
+for each in Spain['features']:
+  lat_lon[each['properties']['provincia']] = each['properties']['geo_point_2d']
+for each in list(state_id_map.values()):
+  if each not in df.province:
+    new_row = { 'lat':lat_lon[each][0],
+            'lon':lat_lon[each][1],
+#So that we dont have empty spaces - we fill in states with no solar with 0
+            'solar_generation':0,
+            'capacity_mw':0,
+            'primary_fuel':'Solar',
+            'province':each}
+    df = df.append(new_row, ignore_index=True)
+# GROUP BY
+data = df.groupby('province').agg({'solar_generation':'sum',
+                                               'primary_fuel':'count',
+                                               'lat':'mean',
+                                               'lon':'mean'}).reset_index()
+# FIGURE 1
+fig1 = px.choropleth(
+ data,
+ locations = 'province', #define the limits on the map/geography
+ locationmode='geojson-id',
+ geojson = Spain, #shape information
+ color = "solar_generation", #defining the color of the scale through the database
+ hover_name = 'province', #the information in the box
+ color_continuous_scale="Greens",
+ range_color=(data.solar_generation.min(), data.solar_generation.max()),
+ )
+fig1.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+#fig1.add_trace(
+#    go.Scattergeo(
+#                lon = data["lon"],
+#                lat = data["lat"],
+#                textposition="middle right",
+#                text = data['primary_fuel'],
+#                mode = 'markers',
+#                marker = dict(size = data['primary_fuel'], color = 'orange', opacity=0.9))
+#    )
+fig1.update_geos(
     center=dict(lon=-3.7038, lat=40.4168),
     lataxis_range=[1,7], lonaxis_range=[35, 45],
     visible=False, resolution=50, scope="europe",
@@ -123,21 +172,18 @@ fig.update_geos(
     showsubunits=True, subunitcolor="White",
     showframe=False, showland=True,
 )
-fig.update_traces(marker=dict(size=12,
-                              line=dict(width=1,
-                                        color='DarkSlateGrey')),
-                  selector=dict(mode='markers'))
-fig.update(layout_coloraxis_showscale=False)
-fig.update_layout(
-    margin=dict(l=1, r=1, t=1, b=1),
-    title_y=0.95
-)
-# PLOTLY FIG2
-c1,c2 = st.columns(2)
-fig2 = px.scatter_geo(map_solar_stations,lat='lat',lon='lon',
-                     color="energy_gen_gwh",
-                     template="simple_white",
-                     color_continuous_scale=px.colors.sequential.Blues)
+
+# FIGURE 2
+fig2 = px.choropleth(
+ data,
+ locations = 'province', #define the limits on the map/geography
+ locationmode='geojson-id',
+ geojson = Spain, #shape information
+ color = "primary_fuel", #defining the color of the scale through the database
+ hover_name = 'province', #the information in the box
+ color_continuous_scale="Oranges",
+ range_color=(data.primary_fuel.min(), data.primary_fuel.max()),
+ )
 fig2.update_geos(
     center=dict(lon=-3.7038, lat=40.4168),
     lataxis_range=[1,7], lonaxis_range=[35, 45],
@@ -146,26 +192,22 @@ fig2.update_geos(
     showsubunits=True, subunitcolor="White",
     showframe=False, showland=True,
 )
-fig2.update_traces(marker=dict(size=12,
-                              line=dict(width=1,
-                                        color='DarkSlateGrey')),
-                  selector=dict(mode='markers'))
-fig2.update(layout_coloraxis_showscale=False)
-fig2.update_layout(
-    margin=dict(l=1, r=1, t=1, b=1),
-    title_y=0.95
-)
-with c1:
+fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+
+col1,col2=st.columns(2)
+
+with col1:
     st.header("Solar Stations per region in Spain | 2017")
     if st.checkbox('Solar Stations Graph Description'):
         st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
         Stations. Here, they are classified by their energy production.")
-    st.plotly_chart(fig, use_container_width =True)
-with c2:
+    st.plotly_chart(fig2, use_container_width =True)
+with col2:
     st.header("Energy generated per region in Spain | 2017")
     if st.checkbox('Locations Graph Description'):
         st.write("By training a supervised model that considered all Solar\
         Stations around the globe, learns which features influence the\
         generation of solar energy, and recommends the most suitable\
         spots to install new stations.")
-    st.plotly_chart(fig2, use_container_width =True)
+    st.plotly_chart(fig1, use_container_width =True)
