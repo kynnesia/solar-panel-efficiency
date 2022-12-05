@@ -157,11 +157,15 @@ fig2.update_layout(
 )
 with c1:
     st.header("Solar Stations in Spain | 2017")
-    st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
+    if st.checkbox('Solar Stations Graph Description'):
+        st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
         Stations. Here, they are classified by their energy production.")
     st.plotly_chart(fig, use_container_width =True)
 with c2:
     st.header("Most Efficienct locations")
-    st.write("By training a supervised model that considered all Solar\
-        S")
+    if st.checkbox('Locations Graph Description'):
+        st.write("By training a supervised model that considered all Solar\
+        Stations around the globe, learns which features influence the\
+        generation of solar energy, and recommends the most suitable\
+        spots to install new stations.")
     st.plotly_chart(fig2, use_container_width =True)
