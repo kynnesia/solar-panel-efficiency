@@ -211,3 +211,8 @@ with col2:
         generation of solar energy, and recommends the most suitable\
         spots to install new stations.")
     st.plotly_chart(fig1, use_container_width =True)
+
+
+#------- PREDICTION MAP  -------
+pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
+st.dataframe(pred_df)
