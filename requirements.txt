@@ -3,4 +3,4 @@ pandas
 requests
 unidecode
 streamlit_folium
-plotly
+plotly.express
