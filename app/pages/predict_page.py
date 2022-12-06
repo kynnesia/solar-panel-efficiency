@@ -36,6 +36,11 @@ bounds = output['bounds']
 if output.get("last_active_drawing") != None:
     st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
 
+#lat = output.get("last_active_drawing").get("geometry").get("coordinates").get(0)
+lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
+
+st.write(lng)
+
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
 lat = output['center']['lat']
