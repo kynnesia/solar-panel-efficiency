@@ -35,9 +35,8 @@ output = st_folium(m, width=1000, height=500)
 bounds = output['bounds']
 if output.get("last_active_drawing") != None:
     st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
-
-#lat = output.get("last_active_drawing").get("geometry").get("coordinates").get(0)
-lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
+    lat = output.get("last_active_drawing").get("geometry").get("coordinates")[0]
+    lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
 
 st.write(lng)
 
