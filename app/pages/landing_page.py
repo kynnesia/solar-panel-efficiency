@@ -217,7 +217,6 @@ with col2:
 pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
 lat_lon_pred = pred_df[["latitude","longitude","production prediction"]]
 lat_lon_pred["production prediction"] = np.exp(lat_lon_pred["production prediction"])
-st.dataframe(lat_lon_pred)
 
 layer = pdk.Layer(
     "GridLayer",
