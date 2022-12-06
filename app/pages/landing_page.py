@@ -228,7 +228,7 @@ layer = pdk.Layer(
     wireframe=True,
     cell_size=15000,
     elevation_scale=200,
-    get_position=['lon', 'lat'],
+    get_position=['longitude', 'latitude',
 )
 layer2 = pdk.Layer(
     "HeatmapLayer",
@@ -236,7 +236,7 @@ layer2 = pdk.Layer(
     opacity=0.5,
     get_position=['longitude', 'latitude'],
     aggregation=String('SUM'),
-    get_weight="energy_gen_gwh")
+    get_weight="production prediction")
 view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
 
 # Render
