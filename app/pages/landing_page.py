@@ -100,7 +100,7 @@ layer2 = pdk.Layer(
     get_position=['lon', 'lat'],
     aggregation=String('SUM'),
     get_weight="energy_gen_gwh")
-view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
+view_state = pdk.ViewState(latitude=40.396765, longitude=-3.71338, zoom=5, bearing=0, pitch=45)
 
 # Render
 r = pdk.Deck(
@@ -233,7 +233,7 @@ layer = pdk.Layer(
     elevation_scale=200,
     get_position=['longitude', 'latitude'],
 )
-view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
+view_state = pdk.ViewState(latitude=40.396765, longitude=-3.71338, zoom=5, bearing=0, pitch=45)
 
 # Render
 pred_graph = pdk.Deck(
