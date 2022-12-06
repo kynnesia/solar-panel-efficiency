@@ -215,4 +215,5 @@ with col2:
 
 #------- PREDICTION MAP  -------
 pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
-st.dataframe(pred_df)
+lat_lon_pred = pred_df[["latitude","longitude","production prediction"]]
+st.dataframe(lat_lon_pred)
