@@ -227,24 +227,18 @@ layer = pdk.Layer(
     stroked=False,
     filled=True,
     wireframe=True,
-    cell_size=15000,
+    get_fill_color=[127,255,0],
+    cell_size=1500,
     elevation_scale=200,
     get_position=['longitude', 'latitude'],
 )
-layer2 = pdk.Layer(
-    "HeatmapLayer",
-    lat_lon_pred,
-    opacity=0.5,
-    get_position=['longitude', 'latitude'],
-    aggregation=String('SUM'),
-    get_weight="production prediction")
 view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
 
 # Render
 pred_graph = pdk.Deck(
-    layers=[layer,layer2],
+    layer,
     initial_view_state=view_state,
-    tooltip={"text": "{position}\nSolar Generation: {energy_gen_gwh}"},
+    tooltip={"text": "{position}\nPredicted Solar Generation: {energy_gen_gwh}"},
 )
 
 st.pydeck_chart(pred_graph)
