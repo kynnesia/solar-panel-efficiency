@@ -27,16 +27,14 @@ st.markdown("This project includes an on-stream prediction API. This allows\
 
 
 #------- INTERACTIVE MAP -------
-m = folium.Map(location=[42.6563,-5.1753], zoom_start=6)
+m = folium.Map(location=[40.396764,-3.735352], zoom_start=6)
 Draw(export=True).add_to(m)
 
 output = st_folium(m, width=1000, height=500)
 
 bounds = output['bounds']
-st.write("Latitude:")
-st.write(output.get("last_clicked").get("lat"))
-st.write("Longitude:")
-st.write(output.get("last_clicked").get("lng"))
+if output.get("last_active_drawing") != None:
+    st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
