@@ -113,7 +113,7 @@ st.pydeck_chart(r)
 
 
 # UPLOAD DATAFRAME
-df = pd.read_csv("raw_data/Energy_Provinces.csv")
+df = pd.read_csv("app/pages/raw_data/Energy_Provinces.csv")
 df = df.rename(columns={'energy_gen_gwh':'solar_generation'})
 df.drop(['Unnamed: 0', 'country'], axis=1, inplace=True)
 df = df.loc[df.primary_fuel=='Solar']
