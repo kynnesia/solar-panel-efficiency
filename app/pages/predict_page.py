@@ -40,10 +40,10 @@ if output.get("last_active_drawing") != None:
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
-lat = output['center']['lat']
-lon = output['center']['lng']
-rad = (output.get('last_circle_radius'))
-data = {"bcircles": f"{lon},{lat},{rad}", "format": "json", "time": "2022-05-07", "filter": "landuse=industrial"}
+#lat = output['center']['lat']
+#lon = output['center']['lng']
+#rad = (output.get('last_circle_radius'))
+#data = {"bcircles": f"{lon},{lat},{rad}", "format": "json", "time": "2022-05-07", "filter": "landuse=industrial"}
 #st.write(data)
-response = requests.post(URL, data=data)
+#response = requests.post(URL, data=data)
 #st.write(response.json())
