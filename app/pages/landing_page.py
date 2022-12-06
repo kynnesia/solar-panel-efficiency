@@ -118,7 +118,7 @@ df = df.rename(columns={'energy_gen_gwh':'solar_generation'})
 df.drop(['Unnamed: 0', 'country'], axis=1, inplace=True)
 df = df.loc[df.primary_fuel=='Solar']
 # LOAD JSON WITH PROVINCIAS AND THEIR LAT-LON POSITION
-Spain = json.load(open('raw_data/spain.geojson', encoding='utf-8'))
+Spain = json.load(open('app/pages/raw_data/spain.geojson', encoding='utf-8'))
 # Create state id map
 state_id_map = {}
 for feature in Spain['features']:
