@@ -228,7 +228,7 @@ layer = pdk.Layer(
     filled=True,
     wireframe=True,
     get_fill_color=[127,255,0],
-    cell_size=1500,
+    cell_size=10000,
     elevation_scale=200,
     get_position=['longitude', 'latitude'],
 )
