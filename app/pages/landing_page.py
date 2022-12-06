@@ -217,3 +217,33 @@ with col2:
 pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
 lat_lon_pred = pred_df[["latitude","longitude","production prediction"]]
 st.dataframe(lat_lon_pred)
+
+layer = pdk.Layer(
+    "GridLayer",
+    lat_lon_pred,
+    pickable=True,
+    extruded=True,
+    stroked=False,
+    filled=True,
+    wireframe=True,
+    cell_size=15000,
+    elevation_scale=200,
+    get_position=['lon', 'lat'],
+)
+layer2 = pdk.Layer(
+    "HeatmapLayer",
+    lat_lon_pred,
+    opacity=0.5,
+    get_position=['longitude', 'latitude'],
+    aggregation=String('SUM'),
+    get_weight="energy_gen_gwh")
+view_state = pdk.ViewState(latitude=43.5528	, longitude=-5.7231, zoom=5, bearing=0, pitch=45)
+
+# Render
+pred_graph = pdk.Deck(
+    layers=[layer,layer2],
+    initial_view_state=view_state,
+    tooltip={"text": "{position}\nSolar Generation: {energy_gen_gwh}"},
+)
+
+st.pydeck_chart(pred_graph)
