@@ -4,4 +4,4 @@ requests
 unidecode
 streamlit_folium
 plotly_express
-plotly==5.11.0
+plotly
