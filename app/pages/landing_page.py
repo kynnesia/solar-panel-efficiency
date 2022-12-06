@@ -27,8 +27,8 @@ investmentxstation = pricexpanel*panelsxstation/1_000_000
 energyxstation = gwhxpanel*panelsxstation
 
 #------- DB -------
-provincias = pd.read_csv("pages/raw_data/provincias.csv")
-solar_stations = pd.read_csv("pages/raw_data/Spain_energy_df_2017.csv")
+provincias = pd.read_csv("app/pages/raw_data/provincias.csv")
+solar_stations = pd.read_csv("app/pages/raw_data/Spain_energy_df_2017.csv")
 map_solar_stations = solar_stations[solar_stations["primary_fuel"]=="Solar"]
 solar_energy = map_solar_stations["energy_gen_gwh"].sum()
 all_energy = solar_stations["energy_gen_gwh"].sum()
