@@ -4,4 +4,5 @@ requests
 unidecode
 streamlit_folium
 plotly_express
+geopy
 plotly
