@@ -228,7 +228,7 @@ layer = pdk.Layer(
     wireframe=True,
     cell_size=15000,
     elevation_scale=200,
-    get_position=['longitude', 'latitude',
+    get_position=['longitude', 'latitude'],
 )
 layer2 = pdk.Layer(
     "HeatmapLayer",
