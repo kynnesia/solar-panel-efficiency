@@ -8,5 +8,4 @@ import pandas as pd
 import datetime
 
 if __name__ == "__main__":
-    df = get_dataframe_option1()
-    general_monthly_df(df, 2017).to_csv("monthly_general_weather_conditions.csv")
+    print(aggregates_df(weather_df(40.4637,3.7492)))

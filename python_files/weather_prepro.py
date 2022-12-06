@@ -4,7 +4,7 @@ import requests
 # For option 1
 def weather_df(lat:float,
               lon:float,
-              year:int, # "YYYY"
+              year:int=2017, # "YYYY"
               )-> pd.DataFrame:
     """
     Given a latitude, longitude, start date, and end date, provide
@@ -66,14 +66,19 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     evapotransp = weather_df["et0_fao_evapotranspiration"].sum()
 
     # List
-    aggregates_list = [weather_df["timestamp"].iat[0],
+    aggregates = pd.DataFrame([weather_df["timestamp"].iat[0],
                        weather_df["latitude"].iat[0],
                        weather_df["longitude"].iat[0],
                        max_temp, min_temp, prec_sum, rain_sum, snow_sum,
                        prec_hours, sun_hours, wind_speed_max, wing_gusts_max,
-                       wind_direction, solar_radiation, evapotransp]
+                       wind_direction, solar_radiation, evapotransp]).T
+    aggregates.columns = ["Timestamp", "Latitude","Longitude","Maximum Temp.",
+                          "Minimum Temp.","Precipitation","Rain","Snow",
+                          "Precipitation hours","Sun hours","Maximum Wind Speed",
+                          "Maximum Wing Gusts","Wind Direction","Solar Radiation",
+                          "Evapotransp."]
     # Return
-    return aggregates_list
+    return aggregates
 
 
 def monthly_weather_df(lat:float,
@@ -121,9 +126,9 @@ def monthly_weather_df(lat:float,
 
 
 def monthly_pvwatts_data(lat,
-                         lon,
-                         proxy,
-                         timeout=5):
+                         lon):
+                         #proxy,
+                         #timeout=5):
     url = 'https://developer.nrel.gov/api/pvwatts/v6.json?api_key=IAwRTEmh1TANaK6K6IwN65trPMdCydwXB0lPcg6f'
     params = {"lat":lat,
               "lon":lon,
@@ -133,14 +138,13 @@ def monthly_pvwatts_data(lat,
               "array_type":1,
               "losses":10,
               "module_type":1,
+              "radius":0,
               "dataset":"intl"}
-    technical_data = requests.get(url, params=params, timeout=timeout,
-                                  proxies={"http":proxy,
-                                           "https":proxy})
+    technical_data = requests.get(url, params=params)
     response = technical_data.json().get("outputs")
-    columns = ["ac_monthly","poa_monthly", "solrad_monthly", "dc_monthly"]
-    df = pd.DataFrame([response.get(each) for each in columns]).T
-    df.columns = columns
-    df["latitude"] = lat
-    df["longitude"] = lon
+    altitude = technical_data.json().get("station_info").get("elev")
+    #ac = response.get("ac_annual")
+    solrad = response.get("solrad_annual")
+    df = pd.DataFrame([altitude,solrad,lat,lon]).T
+    df.columns=["Altitude","Solar Radiation","Latitude","Longitude"]
     return df
