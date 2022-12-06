@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 data-local/
+=======
+*.ipynb
+.waqitoken
+.python-version
+>>>>>>> 6b4278cf9bce5e9a4983c4adc02164deec8d140b
