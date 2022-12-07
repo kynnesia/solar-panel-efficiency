@@ -110,6 +110,7 @@ r = pdk.Deck(
     tooltip={"text": "{position}\nSolar Generation: {energy_gen_gwh}"},
 )
 
+st.header("Energy Production in Spain (solar station and GWh)")
 st.pydeck_chart(r)
 
 
