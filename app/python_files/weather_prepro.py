@@ -1,10 +1,7 @@
 import pandas as pd
 import requests
 import pathlib
-import sys
-# This adds the path of the …/src folder
-# to the PYTHONPATH variable
-sys.path.append(str(pathlib.Path().absolute()).split("/src")[0] + "/src")
+
 
 # For option 1
 def weather_df(lat:float,
