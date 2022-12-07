@@ -37,9 +37,10 @@ bounds = output['bounds']
 if output.get("last_active_drawing") != None:
     lat = output.get("last_active_drawing").get("geometry").get("coordinates")[0]
     lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
-    st.write(f"The following coordinates have been selected:")
-    st.metric("Latitude",round(lat,3))
-    st.metric("Longitude",round(lng,3))
+    c1,c2,c3 = st.columns(3)
+    c1.write(f"The following coordinates have been selected:")
+    c2.metric("Latitude",round(lat,3))
+    c3.metric("Longitude",round(lng,3))
     if st.button('Predict'):
         weather = aggregates_df(weather_df(lat,lng))
         tech = monthly_pvwatts_data(lat,lng)
