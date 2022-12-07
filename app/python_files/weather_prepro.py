@@ -60,7 +60,7 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     rain_sum = weather_df["rain_sum"].sum()
     snow_sum = weather_df["snowfall_sum"].sum()
     prec_hours = weather_df["precipitation_hours"].sum()
-    #sun_hours = (weather_df["sunset"] - weather_df["sunrise"]).mean()
+    sun_hours = (weather_df["sunset"] - weather_df["sunrise"]).mean()
     wind_speed_max = weather_df["windspeed_10m_max"].mean()
     wing_gusts_max = weather_df["windgusts_10m_max"].mean()
     wind_direction = weather_df["winddirection_10m_dominant"].mean()
