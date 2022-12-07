@@ -42,7 +42,7 @@ with col1:
     st.header("Solar energy production")
     option = st.slider('Compared to aggregated energy production (in %)', 0, 100, math.ceil(actual_ratio_solar))
 with col2:
-    st.markdown("This is an ongoing project that aims to improve the decision-\
+    st.markdown("This is an state-of-the-art project that aims to improve the decision-\
         making process concerning where to set up new Solar Stations. To do \
         so, we have analysed some features, mostly weather-related, to predict\
         those locations mostly suited to benefit from solar power.")
@@ -62,7 +62,7 @@ cost = 0
 c1,c2,c3,c4,c5 = st.columns(5)
 c1.metric("Investment needed (m€)", investmentxstation*round(option*(map_solar_stations.shape[0]/actual_ratio_solar)-246))
 c2.metric("Solar stations", round(option*(map_solar_stations.shape[0]/actual_ratio_solar)), -246+round(option*(map_solar_stations.shape[0]/actual_ratio_solar)))
-c3.metric("Solar energy produced (GWh)", int(all_energy)*option/100, round(int(all_energy)*option/100 - solar_energy, 2))
+c3.metric("Solar energy produced (TWh)", round(int(all_energy)*option/100_000), round(int(all_energy)*option/100 - solar_energy))
 c4.metric("Decrease of CO2 (yearly/tons)", -round(int(all_energy)*option/100 - solar_energy, 2)*300)
 c5.metric("Agg. energy produced (GWh)", round(all_energy,2))
 
