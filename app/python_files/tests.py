@@ -13,5 +13,5 @@ if __name__ == "__main__":
         new_column = (column.str[:2]).astype(float)*60 + (column.str[3:5]).astype(float) + (column.str[6:8]).astype(float)/60
         return new_column
     df = aggregates_df(weather_df(40.4637,3.7492))
-    df["Sun Hours"] = strdate_to_float(df["Sun Hours"])
+    #df["Sun Hours"] = strdate_to_float(df["Sun Hours"])
     print(df)
