@@ -52,8 +52,8 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     This function aggregates all the rows by summing or averaging them.
     """
     # To Datetime
-    weather_df["sunrise"] = pd.to_datetime(weather_df["sunrise"])
-    weather_df["sunset"] = pd.to_datetime(weather_df["sunset"])
+    #weather_df["sunrise"] = pd.to_datetime(weather_df["sunrise"])
+    #weather_df["sunset"] = pd.to_datetime(weather_df["sunset"])
     weather_df.drop("time", axis=1, inplace=True)
 
     # Aggregates
