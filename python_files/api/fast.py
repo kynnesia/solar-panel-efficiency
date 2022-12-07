@@ -13,17 +13,20 @@ app = FastAPI()
 #model = xgb.XGBRegressor()
 #model.load_model(model_path)
 
-model = xgb.XGBRegressor(alpha = 100.0,
-                         colsample_bylevel = 0.75,
+model = xgb.XGBRegressor(alpha = 90.0,
+                         colsample_bylevel=0.93,
+                         colsample_bytree=0.5,
                          grow_policy = 'lossguide',
-                         reg_lambda = 1.8592929292929294,
-                         learning_rate = 0.0904040404040404,
-                         max_depth = 11,
-                         min_child_weight = 14,
-                         n_estimators = 100,
+                         reg_lambda = 1.2,
+                         learning_rate = 0.13,
+                         max_depth = 13,
+                         min_child_weight = 4,
+                         n_estimators = 250,
                          objective = 'reg:squarederror',
                          refresh_leaf = 1,
-                         scale_pos_weight = 88)
+                         scale_pos_weight = 29,
+                         gamma=0.0,
+                         tree_method = 'gpu_hist')
 
 X = pd.read_csv('python_files/api/model/X.csv')
 y = pd.read_csv('python_files/api/model/y.csv')
