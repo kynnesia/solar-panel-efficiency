@@ -1,4 +1,4 @@
-from weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data, monthly_weather_df
+from app.pages.weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data, monthly_weather_df
 from panels_prepro import get_dataframe_option3, get_dataframe_option1
 from aggregate import monthly_df_to_model, general_monthly_df
 from sklearn.preprocessing import StandardScaler

@@ -1,5 +1,5 @@
 from panels_prepro import get_dataframe_option1
-from weather_prepro import weather_df,monthly_weather_df, aggregates_df, monthly_pvwatts_data
+from app.pages.weather_prepro import weather_df,monthly_weather_df, aggregates_df, monthly_pvwatts_data
 import pandas as pd
 import numpy as np
 import time
