@@ -9,13 +9,9 @@ from python_files.weather_prepro import weather_df, aggregates_df, monthly_pvwat
 
 html = '''
     <style>
-    .css-fg4pbf {
-    position: absolute;
-    background: rgb(255, 255, 255);
-    color: rgb(230, 200, 0);
-    inset: 0px;
-    overflow: hidden;
-}
+    .Prediction {
+        color=red
+    }
     </style>
 '''
 
@@ -61,7 +57,8 @@ if output.get("last_active_drawing") != None:
         url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
         response = requests.get(url, params=dict_)
         prediction = response.json().get("prediction")
-        st.metric("Prediction (GWh)",round(prediction,2))
+        #st.metric("Prediction (GWh)",round(prediction,2))
+        st.write(f"<p class='Prediction'>{round(prediction,2)} </p>")
         if st.checkbox('Show details'):
             st.write(dict_)
 
