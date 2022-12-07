@@ -41,7 +41,7 @@ if output.get("last_active_drawing") != None:
     c1.write(f"The following coordinates have been selected:")
     c2.metric("Latitude",round(lat,3))
     c3.metric("Longitude",round(lng,3))
-    if st.button('Predict'):
+    if c2.button('Predict'):
         weather = aggregates_df(weather_df(lat,lng))
         tech = monthly_pvwatts_data(lat,lng)
         df = weather.merge(tech, on=["latitude","longitude"], how="left")
