@@ -7,6 +7,19 @@ from streamlit_folium import st_folium
 import math
 from python_files.weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data
 
+html = '''
+    <style>
+    .css-fg4pbf {
+    position: absolute;
+    background: rgb(255, 255, 255);
+    color: rgb(230, 200, 0);
+    inset: 0px;
+    overflow: hidden;
+}
+    </style>
+'''
+
+
 st.set_page_config(layout="wide")
 
 #------- TITLE -------
@@ -63,3 +76,5 @@ URL = 'https://api.ohsome.org/v1/elements/count/density'
 #st.write(data)
 #response = requests.post(URL, data=data)
 #st.write(response.json())
+
+st.markdown(html, unsafe_allow_html=True)
