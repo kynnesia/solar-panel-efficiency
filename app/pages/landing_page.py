@@ -200,7 +200,7 @@ fig2.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 col1,col2=st.columns(2)
 
 with col1:
-    st.header("Solar Stations per region in Spain | 2017")
+    st.header("Solar stations per region in Spain | 2017")
     st.plotly_chart(fig2, use_container_width =True)
     st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
     Stations. Here, they are classified by their energy production.")
