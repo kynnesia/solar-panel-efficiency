@@ -43,14 +43,20 @@ def weather_df(lat:float,
     weather_df["timestamp"] = year
     return weather_df
 
+def strdate_to_float(column:pd.Series) -> pd.Series:
+    column = column.astype(str)
+    column = column.str.lstrip("0").str.strip(" days").str[0:8]
+    new_column = (column.str[:2]).astype(float)*60 + (column.str[3:5]).astype(float) + (column.str[6:8]).astype(float)/60
+    return new_column
+
 # For Option 1
 def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     """
     This function aggregates all the rows by summing or averaging them.
     """
     # To Datetime
-    weather_df["sunrise"] = pd.to_datetime(weather_df["sunrise"])
-    weather_df["sunset"] = pd.to_datetime(weather_df["sunset"])
+    weather_df["sunrise"] = strdate_to_float(weather_df["sunrise"])
+    weather_df["sunset"] = strdate_to_float(weather_df["sunset"])
     weather_df.drop("time", axis=1, inplace=True)
 
     # Aggregates
