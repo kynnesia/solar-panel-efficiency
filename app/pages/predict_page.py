@@ -35,18 +35,21 @@ output = st_folium(m, width=1000, height=500)
 
 bounds = output['bounds']
 if output.get("last_active_drawing") != None:
-    st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
     lat = output.get("last_active_drawing").get("geometry").get("coordinates")[0]
     lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
-    weather = aggregates_df(weather_df(lat,lng))
-    tech = monthly_pvwatts_data(lat,lng)
-    df = weather.merge(tech, on=["latitude","longitude"], how="left")
-    dict_ = df.to_dict(orient="records")[0]
-    st.write(dict_)
-    url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
-    response = requests.get(url, params=dict_)
-    prediction = response.json().get("prediction")
-    st.metric("Prediction",prediction)
+    st.write(f"The following coordinates have been selected: Latitude: {round(lat,3)} | Longitude: {round(lng,3)}")
+    if st.button('Predict'):
+        weather = aggregates_df(weather_df(lat,lng))
+        tech = monthly_pvwatts_data(lat,lng)
+        df = weather.merge(tech, on=["latitude","longitude"], how="left")
+        dict_ = df.to_dict(orient="records")[0]
+        url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
+        response = requests.get(url, params=dict_)
+        prediction = response.json().get("prediction")
+        st.metric("Prediction",round(prediction,2))
+        if st.checkbox('Show details'):
+            st.write(dict_)
+
 
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
