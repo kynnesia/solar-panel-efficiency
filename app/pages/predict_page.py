@@ -41,7 +41,7 @@ if output.get("last_active_drawing") != None:
     weather = aggregates_df(weather_df(lat,lng))
     tech = monthly_pvwatts_data(lat,lng)
     df = weather.merge(tech, on=["Latitude","Longitude"], how="left")
-    st.dataframe(df)
+    st.write(df.to_dict(orients="records"))
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
