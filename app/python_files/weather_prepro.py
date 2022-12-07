@@ -76,7 +76,7 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
                        wind_direction, solar_radiation, evapotransp]).T
     aggregates.columns = ["Timestamp", "Latitude","Longitude","Maximum Temp.",
                           "Minimum Temp.","Precipitation","Rain","Snow",
-                          "Precipitation hours","Sun hours","Maximum Wind Speed",
+                          "Precipitation hours","Maximum Wind Speed",
                           "Maximum Wing Gusts","Wind Direction","Solar Radiation",
                           "Evapotransp."]
     # Return
