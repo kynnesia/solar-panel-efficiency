@@ -40,7 +40,7 @@ if output.get("last_active_drawing") != None:
     lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
     weather = aggregates_df(weather_df(lat,lng))
     tech = monthly_pvwatts_data(lat,lng)
-    df = weather.merge(tech, on=["Latitude","Longitude"], how="left")
+    df = weather.merge(tech, on=["latitude","longitude"], how="left")
     dict_ = df.to_dict(orient="records")[0]
     st.write(dict_)
     url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
