@@ -82,7 +82,7 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     aggregates.columns = ["latitude","longitude","temperature_2m_max",
                           "temperature_2m_min","precipitation_sum","rain_sum","snowfall_sum",
                           "precipitation_hours","sun_hours","windspeed_10m_max",
-                          "windgusts_10m_max","winddirection_10m_dominant","shortwave_radiation_sum ",
+                          "windgusts_10m_max","winddirection_10m_dominant","shortwave_radiation_sum",
                           "et0_fao_evapotranspiration"]
     # Return
     return aggregates
