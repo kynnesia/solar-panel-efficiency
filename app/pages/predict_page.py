@@ -45,7 +45,8 @@ if output.get("last_active_drawing") != None:
     st.write(dict_)
     url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
     response = requests.get(url, params=dict_)
-    st.write(response.json())
+    prediction = response.json().get("prediction")
+    st.metric("Prediction",prediction)
 
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
