@@ -5,6 +5,8 @@ from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
 import math
+import sys
+sys.path.append("app/pages/python_files/weather_prepro.py")
 from app.python_files.weather_prepro import weather_df, aggregates_df
 
 st.set_page_config(layout="wide")
