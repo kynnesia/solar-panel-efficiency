@@ -1,3 +1,5 @@
 import streamlit as st
+from PIL import Image
 
-st.image("app_landing.png")
+image = Image.open('app_landing.png')
+st.image(image)
