@@ -215,7 +215,7 @@ with col2:
 
 
 #------- PREDICTION MAP  -------
-pred_df = pd.read_csv('app/pages/raw_data/Predictions_with_City_Spain.csv')
+pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
 pred_df["production prediction"] = np.exp(pred_df["production prediction"])
 lat_lon_pred = pred_df[["latitude","longitude","production prediction"]]
 
