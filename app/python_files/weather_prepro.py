@@ -74,17 +74,16 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     evapotransp = weather_df["et0_fao_evapotranspiration"].sum()
 
     # List
-    aggregates = pd.DataFrame([weather_df["timestamp"].iat[0],
-                       weather_df["latitude"].iat[0],
+    aggregates = pd.DataFrame([weather_df["latitude"].iat[0],
                        weather_df["longitude"].iat[0],
                        max_temp, min_temp, prec_sum, rain_sum, snow_sum,
                        prec_hours, wind_speed_max, wing_gusts_max,
                        wind_direction, solar_radiation, evapotransp, sun_hours]).T
-    aggregates.columns = ["Timestamp", "Latitude","Longitude","Maximum Temp.",
-                          "Minimum Temp.","Precipitation","Rain","Snow",
-                          "Precipitation hours","Maximum Wind Speed",
-                          "Maximum Wing Gusts","Wind Direction","Solar Radiation",
-                          "Evapotransp.","Sun Hours"]
+    aggregates.columns = ["latitude","longitude","temperature_2m_max",
+                          "temperature_2m_min","precipitation_sum","rain_sum","snowfall_sum",
+                          "precipitation_hours","sun_hours","windspeed_10m_max",
+                          "windgusts_10m_max","winddirection_10m_dominant","shortwave_radiation_sum ",
+                          "et0_fao_evapotranspiration"]
     # Return
     return aggregates
 
@@ -154,5 +153,5 @@ def monthly_pvwatts_data(lat,
     #ac = response.get("ac_annual")
     solrad = response.get("solrad_annual")
     df = pd.DataFrame([altitude,solrad,lat,lon]).T
-    df.columns=["Altitude","Solar Radiation","Latitude","Longitude"]
+    df.columns=["altitude","solrad","latitude","longitude"]
     return df
