@@ -252,8 +252,8 @@ cities = pd.read_csv('app/pages/raw_data/production_predicted_with_cities.csv')
 
 geolocator = Nominatim(user_agent="geoapiExercises")
 
-ca, cb = st.columns(2)
-ca.dataframe(cities[["production prediction","City"]].sort_values(by="production prediction", ascending=False))
-cb.write("This dataframe shows a detailed view of all locations and its predicted\
-    solar energy production, sorted by higher to lower production. This estimations\
-    are based on exact points. Those in the map, are averaged in a bigger zone")
+#ca, cb = st.columns(2)
+#ca.dataframe(cities[["production prediction","City"]].sort_values(by="production prediction", ascending=False))
+#cb.write("This dataframe shows a detailed view of all locations and its predicted\
+#    solar energy production, sorted by higher to lower production. This estimations\
+#    are based on exact points. Those in the map, are averaged in a bigger zone")
