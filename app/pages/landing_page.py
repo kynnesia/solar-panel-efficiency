@@ -110,7 +110,7 @@ r = pdk.Deck(
     tooltip={"text": "{position}\nSolar Generation: {energy_gen_gwh}"},
 )
 
-st.header("Energy Production in Spain (solar station and GWh)")
+st.header("Solar Energy Production in Spain (solar station and GWh)")
 st.pydeck_chart(r)
 
 
@@ -201,18 +201,18 @@ col1,col2=st.columns(2)
 
 with col1:
     st.header("Solar Stations per region in Spain | 2017")
-    if st.checkbox('Solar Stations Graph Description'):
-        st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
-        Stations. Here, they are classified by their energy production.")
     st.plotly_chart(fig2, use_container_width =True)
+    st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
+    Stations. Here, they are classified by their energy production.")
+
 with col2:
     st.header("Energy generated per region in Spain | 2017")
-    if st.checkbox('Locations Graph Description'):
-        st.write("By training a supervised model that considered all Solar\
-        Stations around the globe, learns which features influence the\
-        generation of solar energy, and recommends the most suitable\
-        spots to install new stations.")
     st.plotly_chart(fig1, use_container_width =True)
+    st.write("By training a supervised model that considered all Solar\
+    Stations around the globe, learns which features influence the\
+    generation of solar energy, and recommends the most suitable\
+    spots to install new stations.")
+
 
 
 #------- PREDICTION MAP  -------
