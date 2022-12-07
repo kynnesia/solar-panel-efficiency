@@ -5,7 +5,7 @@ from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
 import math
-from application.app.python_files.weather_prepro import weather_df, aggregates_df
+from solar-panel-efficiency.app.python_files.weather_prepro import weather_df, aggregates_df
 
 st.set_page_config(layout="wide")
 
