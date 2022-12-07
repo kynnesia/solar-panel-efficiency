@@ -247,4 +247,4 @@ st.write("Description of the graph")
 st.pydeck_chart(pred_graph)
 
 geolocator = Nominatim(user_agent="geoapiExercises")
-st.dataframe(pred_df[["City","production prediction"]].sort_values(by="production prediction", ascending=False))
+st.dataframe(lat_lon_pred.sort_values(by="production prediction", ascending=False))
