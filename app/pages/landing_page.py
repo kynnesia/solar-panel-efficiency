@@ -215,7 +215,7 @@ with col2:
 
 
 #------- PREDICTION MAP  -------
-pred_df = pd.read_csv('app/pages/raw_data/data_prediction.csv')
+pred_df = pd.read_csv('app/pages/raw_data/Predictions_with_City_Spain.csv')
 pred_df["production prediction"] = np.exp(pred_df["production prediction"])
 lat_lon_pred = pred_df[["latitude","longitude","production prediction"]]
 
@@ -247,4 +247,4 @@ st.write("Description of the graph")
 st.pydeck_chart(pred_graph)
 
 geolocator = Nominatim(user_agent="geoapiExercises")
-st.dataframe(lat_lon_pred.sort_values(by="production prediction", ascending=False))
+st.dataframe(pred_df[["City","production prediction"]].sort_values(by="production prediction", ascending=False))
