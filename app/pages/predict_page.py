@@ -41,7 +41,12 @@ if output.get("last_active_drawing") != None:
     weather = aggregates_df(weather_df(lat,lng))
     tech = monthly_pvwatts_data(lat,lng)
     df = weather.merge(tech, on=["Latitude","Longitude"], how="left")
-    st.write(df.to_dict(orient="records"))
+    dict_ = df.to_dict(orient="records")
+    st.write(dict_)
+    url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
+    response = requests.get(url, params=dict_)
+    st.write(response.json())
+
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
