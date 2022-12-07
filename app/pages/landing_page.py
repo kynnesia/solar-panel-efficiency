@@ -202,16 +202,15 @@ col1,col2=st.columns(2)
 with col1:
     st.header("Solar stations per region in Spain | 2017")
     st.plotly_chart(fig2, use_container_width =True)
-    st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} Solar\
-    Stations. Here, they are classified by their energy production.")
+    st.write(f"As of 2017, Spain had {map_solar_stations.shape[0]} solar\
+    stations. Here, they are classified, in the corresponding province, by their energy production.")
 
 with col2:
     st.header("Energy generated per region in Spain | 2017")
     st.plotly_chart(fig1, use_container_width =True)
-    st.write("By training a supervised model that considered all Solar\
-    Stations around the globe, learns which features influence the\
-    generation of solar energy, and recommends the most suitable\
-    spots to install new stations.")
+    st.write("This map shows how much solar energy was generated on 2017 \
+    per province. Some provinces, even if having a big amount of solar stations, \
+    do not proportially generate that much solar energy.")
 
 
 
