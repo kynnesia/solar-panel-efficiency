@@ -48,7 +48,7 @@ if output.get("last_active_drawing") != None:
         url = "https://solar-gtumit4j3a-ew.a.run.app/predict"
         response = requests.get(url, params=dict_)
         prediction = response.json().get("prediction")
-        st.metric("Prediction",round(prediction,2))
+        st.metric("Prediction (GWh)",round(prediction,2))
         if st.checkbox('Show details'):
             st.write(dict_)
 
