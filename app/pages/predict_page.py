@@ -5,7 +5,7 @@ from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
 import math
-from app.pages.weather_prepro import weather_df
+from weather_prepro import weather_df
 
 st.set_page_config(layout="wide")
 
