@@ -38,8 +38,10 @@ if output.get("last_active_drawing") != None:
     st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
     lat = output.get("last_active_drawing").get("geometry").get("coordinates")[0]
     lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
-    st.dataframe(aggregates_df(weather_df(lat,lng)))
-    st.dataframe(monthly_pvwatts_data(lat,lng))
+    weather = aggregates_df(weather_df(lat,lng))
+    tech = monthly_pvwatts_data(lat,lng)
+    df = weather.merge(tech, on=["Latitude","Longitude"], how="left")
+    st.dataframe(df)
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
