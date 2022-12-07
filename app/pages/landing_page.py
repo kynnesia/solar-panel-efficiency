@@ -64,7 +64,7 @@ c1.metric("Investment needed (m€)", investmentxstation*round(option*(map_solar
 c2.metric("Solar stations", round(option*(map_solar_stations.shape[0]/actual_ratio_solar)), -246+round(option*(map_solar_stations.shape[0]/actual_ratio_solar)))
 c3.metric("Solar energy produced (TWh)", round(int(all_energy)*option/100_000), round(int(all_energy)*option/100_000 - solar_energy))
 c4.metric("Decrease of CO2 (daily/tons)", -round(int(all_energy)*option/36500 - solar_energy)*300)
-c5.metric("Agg. energy produced (GWh)", round(all_energy,2))
+c5.metric("Agg. energy produced (TWh)", round(int(all_energy)/1_000))
 
 
 #------- PREPRO PROVINCIAS -------
