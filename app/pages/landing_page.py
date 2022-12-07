@@ -62,8 +62,8 @@ cost = 0
 c1,c2,c3,c4,c5 = st.columns(5)
 c1.metric("Investment needed (m€)", investmentxstation*round(option*(map_solar_stations.shape[0]/actual_ratio_solar)-246))
 c2.metric("Solar stations", round(option*(map_solar_stations.shape[0]/actual_ratio_solar)), -246+round(option*(map_solar_stations.shape[0]/actual_ratio_solar)))
-c3.metric("Solar energy produced (TWh)", round(int(all_energy)*option/100_000), round(int(all_energy)*option/100 - solar_energy))
-c4.metric("Decrease of CO2 (yearly/tons)", -round(int(all_energy)*option/100 - solar_energy, 2)*300)
+c3.metric("Solar energy produced (TWh)", round(int(all_energy)*option/100_000), round(int(all_energy)*option/100_000 - solar_energy))
+c4.metric("Decrease of CO2 (daily/tons)", -round(int(all_energy)*option/36500 - solar_energy)*300)
 c5.metric("Agg. energy produced (GWh)", round(all_energy,2))
 
 
