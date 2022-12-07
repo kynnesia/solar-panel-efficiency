@@ -49,8 +49,8 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
     This function aggregates all the rows by summing or averaging them.
     """
     # To Datetime
-    #weather_df["sunrise"] = pd.to_datetime(weather_df["sunrise"])
-    #weather_df["sunset"] = pd.to_datetime(weather_df["sunset"])
+    weather_df["sunrise"] = pd.to_datetime(weather_df["sunrise"])
+    weather_df["sunset"] = pd.to_datetime(weather_df["sunset"])
     weather_df.drop("time", axis=1, inplace=True)
 
     # Aggregates
@@ -73,12 +73,12 @@ def aggregates_df(weather_df:pd.DataFrame) -> pd.DataFrame:
                        weather_df["longitude"].iat[0],
                        max_temp, min_temp, prec_sum, rain_sum, snow_sum,
                        prec_hours, wind_speed_max, wing_gusts_max,
-                       wind_direction, solar_radiation, evapotransp]).T
+                       wind_direction, solar_radiation, evapotransp, sun_hours]).T
     aggregates.columns = ["Timestamp", "Latitude","Longitude","Maximum Temp.",
                           "Minimum Temp.","Precipitation","Rain","Snow",
                           "Precipitation hours","Maximum Wind Speed",
                           "Maximum Wing Gusts","Wind Direction","Solar Radiation",
-                          "Evapotransp."]
+                          "Evapotransp.","Sun Hours"]
     # Return
     return aggregates
 
