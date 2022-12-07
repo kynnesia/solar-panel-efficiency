@@ -5,7 +5,7 @@ from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
 import math
-from weather_prepro import weather_df
+from weather_prepro import weather_df, aggregates_df
 
 st.set_page_config(layout="wide")
 
@@ -38,7 +38,7 @@ if output.get("last_active_drawing") != None:
     st.write(output.get("last_active_drawing").get("geometry").get("coordinates"))
     lat = output.get("last_active_drawing").get("geometry").get("coordinates")[0]
     lng = output.get("last_active_drawing").get("geometry").get("coordinates")[1]
-    st.dataframe(weather_df(lat,lng))
+    st.dataframe(aggregates_df(weather_df(lat,lng)))
 
 URL = 'https://api.ohsome.org/v1/elements/count/density'
 
