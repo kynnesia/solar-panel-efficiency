@@ -249,4 +249,7 @@ st.pydeck_chart(pred_graph)
 cities = pd.read_csv('app/pages/raw_data/Predictions_with_City_Spain.csv')
 
 geolocator = Nominatim(user_agent="geoapiExercises")
-st.dataframe(cities[["production prediction","City"]].sort_values(by="production prediction", ascending=False))
+
+ca, cb = st.columns(2)
+ca.dataframe(cities[["production prediction","City"]].sort_values(by="production prediction", ascending=False))
+cb.write("Description")
