@@ -59,6 +59,12 @@ if output.get("last_active_drawing") != None:
         prediction = response.json().get("prediction")
         #st.metric("Prediction (GWh)",round(prediction,2))
         c2.title(f"Prediction: {round(prediction,2)} GWh")
+        c2.write(f"With this prediction, and considering an average energy \
+            spenditure of 7.95MWh/year per habitant, the average-sized solar station at \
+            this location would fulfill the yearly demand of **{prediction/(7.95/1_000)}**\
+            citizens.")
+        c2.write(f"That would be {(prediction/13_222*100)}% of energy consumed in \
+            Barcelona.")
         if st.checkbox('Show details'):
             st.write(dict_)
 
