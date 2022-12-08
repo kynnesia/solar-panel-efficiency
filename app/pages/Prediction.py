@@ -65,6 +65,16 @@ if output.get("last_active_drawing") != None:
             citizens.")
         c2.write(f"That would be {(prediction/13_222*100)}% of energy consumed in \
             Barcelona.")
+        if prediction > 15.14:
+            c2.write(f"15.14GWh/year is the average energy production of all stations. \
+                If a standard solar station was placed in this location, it would produce \
+                **{prediction - 15.14}** more than the average, so it would be a suitable place \
+                for a solar station.")
+        else:
+            c2.write(f"15.14GWh/year is the average energy production of all stations. \
+            If a standard solar station was placed in this location, it would produce \
+            **{prediction - 15.14}** less than the average, so would not be a suitable place \
+            for a solar station.")
         if st.checkbox('Show details'):
             st.write(dict_)
 
