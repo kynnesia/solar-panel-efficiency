@@ -63,7 +63,7 @@ if output.get("last_active_drawing") != None:
             spenditure of 7.95MWh/year per habitant, the average-sized solar station at \
             this location would fulfill the yearly demand of **{int(prediction/(7.95/1_000))}**\
             citizens.")
-        c2.write(f"That would be {round(prediction/13_222*100,1)}% of energy consumed in \
+        c2.write(f"That would be **{round(prediction/13_222*100,1)} %** of energy consumed in \
             Barcelona.")
         if prediction > 15.14:
             c2.write(f"15.14GWh/year is the average energy production of all stations. \
@@ -73,7 +73,7 @@ if output.get("last_active_drawing") != None:
         else:
             c2.write(f"15.14GWh/year is the average energy production of all stations. \
             If a standard solar station was placed in this location, it would produce \
-            **{round(prediction - 15.14,1)}** less than the average, so would not be a suitable place \
+            **{round((prediction - 15.14)/15.14,1)} %** less than the average, so would not be a suitable place \
             for a solar station.")
         if st.checkbox('Show details'):
             st.write(dict_)
