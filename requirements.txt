@@ -1,7 +1,7 @@
 pandas
 numpy
 requests
-xgboost
+xgboost==0.90
 fastapi
 uvicorn
 scikit-learn

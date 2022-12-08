@@ -25,13 +25,12 @@ model = xgb.XGBRegressor(alpha = 90.0,
                          objective = 'reg:squarederror',
                          refresh_leaf = 1,
                          scale_pos_weight = 29,
-                         gamma=0.0,
-                         tree_method = 'gpu_hist')
+                         gamma=0.0)
 
 X = pd.read_csv('python_files/api/model/X.csv')
 y = pd.read_csv('python_files/api/model/y.csv')
 
-#y = np.exp(y['production'])
+y = y['production']
 X = X.drop(columns= ['Unnamed: 0'], axis=1)
 
 
