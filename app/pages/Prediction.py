@@ -5,6 +5,7 @@ from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
 import plotly.express as px
+import matplotlib.pyplot as plt
 import math
 import pandas as pd
 from python_files.weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data
@@ -79,6 +80,7 @@ if output.get("last_active_drawing") != None:
             **{round((prediction - 15.14)/15.14,1)} %** less than the average, so would not be a suitable place \
             for a solar station.")
         fig = px.box(pred_df, y="production prediction", points="all")
+        fig = px.plot(prediction)
         st.plotly_chart(fig)
         if st.checkbox('Show details'):
             st.write(dict_)
