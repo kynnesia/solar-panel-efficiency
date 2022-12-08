@@ -4,7 +4,9 @@ import streamlit as st
 from folium.plugins import Draw
 import requests
 from streamlit_folium import st_folium
+import plotly.express as px
 import math
+import pandas as pd
 from python_files.weather_prepro import weather_df, aggregates_df, monthly_pvwatts_data
 
 html = '''
@@ -15,7 +17,7 @@ html = '''
     </style>
 '''
 
-
+pred_df = pd.read_csv('app/pages/raw_data/production_predicted_with_cities.csv')
 st.set_page_config(layout="wide")
 
 #------- TITLE -------
@@ -75,6 +77,8 @@ if output.get("last_active_drawing") != None:
             If a standard solar station was placed in this location, it would produce \
             **{round((prediction - 15.14)/15.14,1)} %** less than the average, so would not be a suitable place \
             for a solar station.")
+        fig = px.box(pred_df, y="production prediction", points="all")
+        st.plotly_chart(fig)
         if st.checkbox('Show details'):
             st.write(dict_)
 
