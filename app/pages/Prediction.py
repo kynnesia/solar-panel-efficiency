@@ -86,8 +86,8 @@ if output.get("last_active_drawing") != None:
         fig.update_layout(title_text="Distribution of all solar stations by generation",
                           showlegend=False)
         colB.plotly_chart(fig)
-        if st.checkbox('Show details'):
-            st.write(dict_)
+        #if st.checkbox('Show details'):
+        #    st.write(dict_)
 
 
 
