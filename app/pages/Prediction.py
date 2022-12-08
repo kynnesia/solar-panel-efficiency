@@ -19,7 +19,7 @@ html = '''
 '''
 
 pred_df = pd.read_csv('app/pages/raw_data/production_predicted_with_cities.csv')
-pred_df = pred_df[pred_df["production prediction"]<200]
+pred_df = pred_df[pred_df["production prediction"]<36]
 st.set_page_config(layout="wide")
 
 #------- TITLE -------
