@@ -106,9 +106,7 @@ view_state = pdk.ViewState(latitude=40.396765, longitude=-3.71338, zoom=5, beari
 # Render
 r = pdk.Deck(
     layers=[layer,layer2],
-    initial_view_state=view_state,
-    tooltip={"text": "Solar Generation: {energy_gen_gwh}"},
-)
+    initial_view_state=view_state)
 
 st.header("Solar Energy Production in Spain (solar station and GWh)")
 st.pydeck_chart(r)
