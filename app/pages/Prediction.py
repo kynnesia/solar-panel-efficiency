@@ -54,6 +54,7 @@ if output.get("last_active_drawing") != None:
     c1.metric("Latitude",round(lat,3))
     c2.metric("Longitude",round(lng,3))
     if c3.button('Predict'):
+        colA,colB=st.columns(2)
         weather = aggregates_df(weather_df(lat,lng))
         tech = monthly_pvwatts_data(lat,lng)
         df = weather.merge(tech, on=["latitude","longitude"], how="left")
@@ -62,20 +63,20 @@ if output.get("last_active_drawing") != None:
         response = requests.get(url, params=dict_)
         prediction = response.json().get("prediction")
         #st.metric("Prediction (GWh)",round(prediction,2))
-        c2.title(f"Prediction: {round(prediction,2)} GWh")
-        c2.write(f"With this prediction, and considering an average energy \
+        colA.title(f"Prediction: {round(prediction,2)} GWh")
+        colA.write(f"With this prediction, and considering an average energy \
             spenditure of 7.95MWh/year per habitant, the average-sized solar station at \
             this location would fulfill the yearly demand of **{int(prediction/(7.95/1_000))}**\
             citizens.")
-        c2.write(f"That would be **{round(prediction/13_222*100,1)} %** of energy consumed in \
+        colA.write(f"That would be **{round(prediction/13_222*100,1)} %** of energy consumed in \
             Barcelona.")
         if prediction > 15.14:
-            c2.write(f"15.14GWh/year is the average energy production of all stations. \
+            colA.write(f"15.14GWh/year is the average energy production of all stations. \
                 If a standard solar station was placed in this location, it would produce \
                 **{round((prediction - 15.14)/15.14,1)}%** more than the average, so it would be a suitable place \
                 for a solar station.")
         else:
-            c2.write(f"15.14GWh/year is the average energy production of all stations. \
+            colA.write(f"15.14GWh/year is the average energy production of all stations. \
             If a standard solar station was placed in this location, it would produce \
             **{round((prediction - 15.14)/15.14,1)}%** less than the average, so would not be a suitable place \
             for a solar station.")
@@ -83,7 +84,7 @@ if output.get("last_active_drawing") != None:
         fig.add_trace(go.Box(x=[round(prediction,2)],
                              name="Prediction"))
         fig.update_layout(title_text="Distribution of all solar stations by generation")
-        c2.plotly_chart(fig)
+        colB.plotly_chart(fig)
         if st.checkbox('Show details'):
             st.write(dict_)
 
