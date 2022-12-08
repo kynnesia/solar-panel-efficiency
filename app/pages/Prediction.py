@@ -80,7 +80,7 @@ if output.get("last_active_drawing") != None:
             **{round((prediction - 15.14)/15.14,1)}%** less than the average, so would not be a suitable place \
             for a solar station.")
         fig = px.box(pred_df, y="production prediction")
-        fig.add_trace(go.Box(y=[round(prediction,2)]))
+        fig.add_trace(go.Box(x=[round(prediction,2)]))
         fig.update_layout(title_text="Distribution of all solar stations by generation")
         st.plotly_chart(fig)
         if st.checkbox('Show details'):
