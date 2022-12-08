@@ -31,7 +31,7 @@ model = xgb.XGBRegressor(alpha = 90.0,
 X = pd.read_csv('python_files/api/model/X.csv')
 y = pd.read_csv('python_files/api/model/y.csv')
 
-y = np.exp(y['production'])
+#y = np.exp(y['production'])
 X = X.drop(columns= ['Unnamed: 0'], axis=1)
 
 
@@ -73,4 +73,4 @@ def predict (latitude:float,
             'altitude' :[altitude],
             'solrad' : [solrad]})
     prediction = model.predict(input_data)
-    return {'prediction': float(prediction[0])}
+    return {'prediction': np.exp(float(prediction[0]))}
