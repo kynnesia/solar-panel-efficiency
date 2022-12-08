@@ -83,7 +83,8 @@ if output.get("last_active_drawing") != None:
         fig = px.box(pred_df, x="production prediction")
         fig.add_trace(go.Box(x=[round(prediction,2)],
                              name="Prediction"))
-        fig.update_layout(title_text="Distribution of all solar stations by generation")
+        fig.update_layout(title_text="Distribution of all solar stations by generation",
+                          showlegend=False)
         colB.plotly_chart(fig)
         if st.checkbox('Show details'):
             st.write(dict_)
