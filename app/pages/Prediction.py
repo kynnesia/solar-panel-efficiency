@@ -54,6 +54,7 @@ if output.get("last_active_drawing") != None:
     c1.metric("Latitude",round(lat,3))
     c2.metric("Longitude",round(lng,3))
     if c3.button('Predict'):
+        st.snow()
         colA,colB=st.columns(2)
         weather = aggregates_df(weather_df(lat,lng))
         tech = monthly_pvwatts_data(lat,lng)
