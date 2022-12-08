@@ -107,7 +107,7 @@ view_state = pdk.ViewState(latitude=40.396765, longitude=-3.71338, zoom=5, beari
 r = pdk.Deck(
     layers=[layer,layer2],
     initial_view_state=view_state,
-    tooltip={"text": f"Solar Generation: {map_solar_stations['energy_gen_gwh']}"},
+    tooltip={"text": "Solar Generation: {energy_gen_gwh}"},
 )
 
 st.header("Solar Energy Production in Spain (solar station and GWh)")
