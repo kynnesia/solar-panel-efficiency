@@ -74,12 +74,12 @@ if output.get("last_active_drawing") != None:
         if prediction > 15.14:
             colA.write(f"15.14GWh/year is the average energy production of all stations. \
                 If a standard solar station was placed in this location, it would produce \
-                **{round((prediction - 15.14)/15.14,1)}%** more than the average, so it would be a suitable place \
+                **{round((prediction - 15.14)/15.14,1)*100}%** more than the average, so it would be a suitable place \
                 for a solar station.")
         else:
             colA.write(f"15.14GWh/year is the average energy production of all stations. \
             If a standard solar station was placed in this location, it would produce \
-            **{round((prediction - 15.14)/15.14,1)}%** less than the average, so would not be a suitable place \
+            **{round((prediction - 15.14)/15.14,1)*100}%** less than the average, so would not be a suitable place \
             for a solar station.")
         fig = px.box(pred_df, x="production prediction")
         fig.add_trace(go.Box(x=[round(prediction,2)],
