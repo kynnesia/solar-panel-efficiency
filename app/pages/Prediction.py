@@ -54,7 +54,6 @@ if output.get("last_active_drawing") != None:
     c1.metric("Latitude",round(lat,3))
     c2.metric("Longitude",round(lng,3))
     if c3.button('Predict'):
-        st.balloons()
         colA,colB=st.columns(2)
         weather = aggregates_df(weather_df(lat,lng))
         tech = monthly_pvwatts_data(lat,lng)
@@ -72,11 +71,13 @@ if output.get("last_active_drawing") != None:
         colA.write(f"That would be **{round(prediction/13_222*100,1)} %** of energy consumed in \
             Barcelona.")
         if prediction > 15.14:
+            st.balloons()
             colA.write(f"15.14GWh/year is the average energy production of all stations. \
                 If a standard solar station was placed in this location, it would produce \
                 **{round((prediction - 15.14)/15.14,1)*100}%** more than the average, so it would be a suitable place \
                 for a solar station.")
         else:
+            st.snow()
             colA.write(f"15.14GWh/year is the average energy production of all stations. \
             If a standard solar station was placed in this location, it would produce \
             **{round((prediction - 15.14)/15.14,1)*100}%** less than the average, so would not be a suitable place \
