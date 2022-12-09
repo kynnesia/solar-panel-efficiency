@@ -70,8 +70,9 @@ if output.get("last_active_drawing") != None:
             citizens.")
         colA.write(f"That would be **{round(prediction/13_222*100,1)} %** of energy consumed in \
             Barcelona.")
-        if prediction > 15.14:
+        if prediction > 30:
             st.balloons()
+        elif prediction > 15.14:
             colA.write(f"15.14GWh/year is the average energy production of all stations. \
                 If a standard solar station was placed in this location, it would produce \
                 **{round((prediction - 15.14)/15.14,1)*100}%** more than the average, so it would be a suitable place \
